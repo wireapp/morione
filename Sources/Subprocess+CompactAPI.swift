@@ -36,7 +36,7 @@ extension Subprocess {
      the constructor and `output` instance method for a more graceful error handling
      */
     public static func output(
-        executablePath: String,
+        _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> String {
         
@@ -59,7 +59,7 @@ extension Subprocess {
      the constructor and `execute` instance method for a more graceful error handling
      */
     public static func execute(
-        executablePath: String,
+        _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> ExecutionResult {
         
@@ -78,7 +78,7 @@ extension Subprocess {
      the constructor and `output` instance method for a more graceful error handling
      */
     public static func outputLines(
-        executablePath: String,
+        _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> [String] {
         
@@ -101,7 +101,7 @@ extension Subprocess {
      the constructor and the `run` instance method for a more graceful error handling
      */
     public static func run(
-        executablePath: String,
+        _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> Int32 {
         
@@ -119,7 +119,7 @@ extension Subprocess {
      the constructor and `run` instance method for a more graceful error handling
      */
     public static func runOrDie(
-        executablePath: String,
+        _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") {
         

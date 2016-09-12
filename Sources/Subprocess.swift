@@ -60,7 +60,7 @@ public class Subprocess {
                   pipeTo: nil)
     }
     
-    private init(
+    fileprivate init(
         executablePath: String,
         arguments: [String] = [],
         workingDirectory: String = ".",
@@ -108,7 +108,7 @@ extension Subprocess {
      Executes the subprocess and wait for completition, returning the exit status
      - returns: the execution result, or nil if it was not possible to execute the process
      */
-    public func execute(captureOutput: Bool = false) -> ExecutionResult? {
+    public func execute(_ captureOutput: Bool = false) -> ExecutionResult? {
         return buildPipeline(captureOutput).run()
     }
 }
@@ -139,15 +139,15 @@ public func | (lhs: String, rhs: String) -> String {
 }
 
 // MARK: - Process execution
-public enum SubprocessError : ErrorType {
-    case Error(reason: String)
+public enum SubprocessError : Swift.Error {
+    case error(reason: String)
 }
 
 extension Subprocess {
     
     /// Returns the task to execute
-    private func task() -> NSTask {
-        let task = NSTask()
+    private func task() -> Process {
+        let task = Process()
         task.launchPath = self.executablePath
         task.arguments = self.arguments
         task.currentDirectoryPath = self.workingDirectory
@@ -155,7 +155,7 @@ extension Subprocess {
     }
     
     /// Returns the task pipeline for all the downstream processes
-    private func buildPipeline(captureOutput: Bool, input: AnyObject? = nil) -> TaskPipeline {
+    fileprivate func buildPipeline(_ captureOutput: Bool, input: AnyObject? = nil) -> TaskPipeline {
         let task = self.task()
         
         if let inPipe = input {
@@ -163,7 +163,7 @@ extension Subprocess {
         }
         
         if let downstreamProcess = self.pipeDestination {
-            let downstreamPipeline = downstreamProcess.buildPipeline(captureOutput, input: task.standardOutput)
+            let downstreamPipeline = downstreamProcess.buildPipeline(captureOutput, input: task.standardOutput as AnyObject?)
             return downstreamPipeline.addToHead(task)
         }
         return TaskPipeline(task: task, captureOutput: captureOutput)
@@ -177,8 +177,8 @@ extension Subprocess  : CustomStringConvertible {
         return self.executablePath
             + (self.arguments.count > 0
                 ? " " + self.arguments
-                .map { $0.stringByReplacingOccurrencesOfString(" ", withString: "\\ ") }
-                .joinWithSeparator(" ")
+                .map { $0.replacingOccurrences(of: " ", with: "\\ ") }
+                .joined(separator: " ")
                 : ""
             )
             + (self.pipeDestination != nil ? " | " + self.pipeDestination!.description : "" )

@@ -27,11 +27,11 @@ import Foundation
 struct Error {
     
     /// Prints to console the arguments and exits with status 1
-    @noreturn static func die(arguments: Any...) {
+    static func die(_ arguments: Any...) -> Never  {
         let output = "ERROR: " + arguments.reduce("") { $0 + "\($1) " }
-        let trimOutput = output.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) + "\n"
-        let stderr = NSFileHandle.fileHandleWithStandardError()
-        stderr.writeData(trimOutput.dataUsingEncoding(NSUTF8StringEncoding)!)
+        let trimOutput = output.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n"
+        let stderr = FileHandle.standardError
+        stderr.write(trimOutput.data(using: String.Encoding.utf8)!)
         exit(1)
     }
 }
