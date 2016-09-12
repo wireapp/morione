@@ -29,8 +29,8 @@ import Foundation
 /// are extremely low
 func nonExistingFileName() -> String {
     while(true) {
-        let uuidString = "/\(NSUUID().hash)/\(NSUUID().hash)"
-        if !NSFileManager.defaultManager().fileExistsAtPath(uuidString) {
+        let uuidString = "/\(UUID().uuidString)/\(UUID().uuidString)"
+        if !FileManager.default.fileExists(atPath: uuidString) {
             return uuidString
         }
     }
@@ -39,8 +39,8 @@ func nonExistingFileName() -> String {
 /// Returns a file path to a file that exists, but it's not executable
 /// It is not guaranteed that it won't be executable in future, but it's unlikely
 func nonExecutableFileName() -> String {
-    let nonExecutable = NSBundle(forClass: SubprocessTests.self).pathForResource("file", ofType: "txt")
-    assert(NSFileManager.defaultManager().fileExistsAtPath(nonExecutable!))
-    assert(!NSFileManager.defaultManager().isExecutableFileAtPath(nonExecutable!))
+    let nonExecutable = Bundle(for: SubprocessTests.self).path(forResource: "file", ofType: "txt")
+    assert(FileManager.default.fileExists(atPath: nonExecutable!))
+    assert(!FileManager.default.isExecutableFile(atPath: nonExecutable!))
     return nonExecutable!
 }
