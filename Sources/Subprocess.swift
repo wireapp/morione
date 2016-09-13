@@ -91,7 +91,7 @@ extension Subprocess {
      Executes the subprocess and wait for completition, returning the exit status
      - returns: the termination status, or nil if it was not possible to execute the process
      */
-    public func run() -> Int32? {
+    @discardableResult public func run() -> Int32? {
         return self.execute(false)?.status
     }
     
