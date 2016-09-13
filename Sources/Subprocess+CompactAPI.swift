@@ -100,7 +100,7 @@ extension Subprocess {
      - note: in case there is any error in launching the process or creating the task, it will halt execution. Use
      the constructor and the `run` instance method for a more graceful error handling
      */
-    public static func run(
+    @discardableResult public static func run(
         _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> Int32 {
