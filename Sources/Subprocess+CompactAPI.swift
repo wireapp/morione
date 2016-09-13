@@ -35,7 +35,7 @@ extension Subprocess {
      - note: in case there is any error in executing the process or creating the task, it will halt execution. Use
      the constructor and `output` instance method for a more graceful error handling
      */
-    public static func output(
+    @discardableResult public static func output(
         _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> String {
@@ -77,7 +77,7 @@ extension Subprocess {
      - note: in case there is any error in executing the process or creating the task, it will halt execution. Use
      the constructor and `output` instance method for a more graceful error handling
      */
-    public static func outputLines(
+    @discardableResult public static func outputLines(
         _ executablePath: String,
         _ arguments: String...,
         workingDirectory: String = ".") -> [String] {

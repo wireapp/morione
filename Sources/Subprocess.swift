@@ -100,7 +100,7 @@ extension Subprocess {
      - returns: the output of the process, or nil if it was not possible to execute the process
      - warning: the entire output will be stored in a String in memory
      */
-    public func output() -> String? {
+    @discardableResult public func output() -> String? {
         return self.execute(true)?.output
     }
     
@@ -108,7 +108,7 @@ extension Subprocess {
      Executes the subprocess and wait for completition, returning the exit status
      - returns: the execution result, or nil if it was not possible to execute the process
      */
-    public func execute(_ captureOutput: Bool = false) -> ExecutionResult? {
+    @discardableResult public func execute(_ captureOutput: Bool = false) -> ExecutionResult? {
         return buildPipeline(captureOutput).run()
     }
 }
